@@ -135,6 +135,15 @@ const jsonLd = {
   },
 };
 
+// Declares the site name Google shows in search results (instead of the domain)
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "PT. Nyi Bahari Steel",
+  alternateName: "Nyi Bahari Steel",
+  url: siteUrl,
+};
+
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function RootLayout({
@@ -151,6 +160,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
         />
         {children}
         {gaId ? (
