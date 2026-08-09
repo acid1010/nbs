@@ -115,13 +115,13 @@ const jsonLd = {
     "@type": "AdministrativeArea",
     name: "Jawa Barat",
   },
+  sameAs: ["https://www.tiktok.com/@nyi.bahari.steel"],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     opens: "08:00",
     closes: "17:00",
   },
-  sameAs: [],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Layanan",
@@ -144,6 +144,25 @@ const websiteLd = {
   url: siteUrl,
 };
 
+// Organization identity + logo for Google knowledge panel / rich results
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "PT. Nyi Bahari Steel",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.jpeg`,
+  email: "nyibaharisteel@gmail.com",
+  telephone: "+628139547223",
+  sameAs: ["https://www.tiktok.com/@nyi.bahari.steel"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+628139547223",
+    contactType: "sales",
+    areaServed: "ID",
+    availableLanguage: ["id", "en"],
+  },
+};
+
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function RootLayout({
@@ -164,6 +183,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
         />
         {children}
         {gaId ? (

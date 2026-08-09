@@ -16,6 +16,49 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nyibaharisteel.com"
 type PageParams = { slug: string };
 type PageSearch = { lang?: string };
 
+/** Per-category SEO keywords (ID-focused, matching the site's primary market). */
+const productKeywords: Record<string, string[]> = {
+  "project-manpower-outsourcing": [
+    "outsourcing tenaga kerja konstruksi",
+    "penyedia tenaga kerja proyek",
+    "tukang las bersertifikat",
+    "operator alat berat SIO",
+    "manpower proyek Purwakarta",
+    "jasa penyaluran pekerja industri",
+  ],
+  "heavy-equipment-fleet": [
+    "sewa alat berat Purwakarta",
+    "rental excavator Jawa Barat",
+    "sewa forklift",
+    "rental mobile crane",
+    "sewa vibro roller",
+    "rental alat berat dengan operator",
+  ],
+  "k3-safety-gear": [
+    "supplier APD konstruksi",
+    "jual helm safety SNI",
+    "supplier safety K3 Purwakarta",
+    "sepatu safety steel toe",
+    "rompi safety reflektif",
+    "alat pelindung diri proyek",
+  ],
+  "industrial-technical-tools": [
+    "supplier alat teknik industri",
+    "jual mesin las inverter",
+    "gerinda tangan heavy duty",
+    "tool set mekanik",
+    "alat teknik konstruksi Purwakarta",
+  ],
+  "infrastructure-materials": [
+    "supplier pipa HDPE",
+    "jual pipa PVC industri",
+    "kabel listrik NYY NYFGBY",
+    "supplier material plumbing",
+    "pompa air submersible industri",
+    "material instalasi pabrik",
+  ],
+};
+
 /* ---------------------------------------------------------- */
 /* Static generation                                          */
 /* ---------------------------------------------------------- */
@@ -47,6 +90,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    keywords: productKeywords[slug] ?? [],
     alternates: {
       canonical: `/products/${slug}`,
       languages: {
@@ -59,7 +103,7 @@ export async function generateMetadata({
       url: `/products/${slug}`,
       title,
       description,
-      images: [{ url: product.image }],
+      images: [{ url: product.image, alt: product.category }],
     },
     twitter: {
       card: "summary_large_image",
