@@ -167,7 +167,7 @@ export interface ContentData {
 export const content: { en: ContentData; id: ContentData } = {
   en: {
     meta: {
-      title: "PT. Nyi Bahari Steel | Heavy Equipment, K3 Safety & Manpower — Purwakarta",
+      title: "PT. Nyi Bahari Steel | Heavy Equipment, K3 Safety & Manpower",
       description: "Construction supplier in Purwakarta, West Java: heavy equipment rental, certified K3 safety gear, technical tools, plumbing & electrical installation, and project manpower outsourcing.",
       keywords: "PT Nyi Bahari Steel, heavy equipment rental Purwakarta, excavator rental West Java, K3 safety supplier, PPE construction, technical tools industrial, plumbing electrical installation factory, construction manpower outsourcing Indonesia, project workers Purwakarta",
 
@@ -686,7 +686,7 @@ export const content: { en: ContentData; id: ContentData } = {
   },
   id: {
     meta: {
-      title: "PT. Nyi Bahari Steel | Supplier Alat Berat, Safety K3 & Manpower Purwakarta",
+      title: "PT. Nyi Bahari Steel | Alat Berat, Safety K3 & Manpower",
       description: "Supplier konstruksi di Purwakarta, Jawa Barat: sewa alat berat, APD/safety K3, alat teknik, instalasi plumbing & listrik, serta outsourcing tenaga kerja proyek industri.",
       keywords: "PT Nyi Bahari Steel, supplier alat berat Purwakarta, sewa alat berat Jawa Barat, rental excavator Purwakarta, supplier safety K3, APD konstruksi, alat teknik industri, instalasi plumbing listrik pabrik, outsourcing tenaga kerja konstruksi, manpower proyek Purwakarta, supplier konstruksi Jawa Barat",
 

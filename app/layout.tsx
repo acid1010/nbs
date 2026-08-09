@@ -15,8 +15,7 @@ const geistMono = Geist_Mono({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nyibaharisteel.com";
 
-const title =
-  "PT. Nyi Bahari Steel | Supplier Alat Berat, Safety K3 & Manpower Purwakarta";
+const title = "PT. Nyi Bahari Steel | Alat Berat, Safety K3 & Manpower";
 const description =
   "Supplier konstruksi di Purwakarta, Jawa Barat: sewa alat berat, APD/safety K3, alat teknik, instalasi plumbing & listrik, serta outsourcing tenaga kerja proyek industri.";
 
