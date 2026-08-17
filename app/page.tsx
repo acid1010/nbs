@@ -6,8 +6,9 @@ import Link from "next/link";
 import { content } from "./data/content";
 import QuoteForm from "./components/quote-form";
 
-// Real job-site photos cycled in the hero slider
+// Real job-site photos cycled in the hero slider (brochure first)
 const heroSlides = [
+  "/brosur.jpeg",
   "/real_life_photos.jpeg",
   "/real_life_photos2.jpeg",
   "/real_life_photos3.jpeg",
