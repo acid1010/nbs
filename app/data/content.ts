@@ -273,7 +273,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Infrastructure Materials",
           slug: "infrastructure-materials",
           description: "Industrial grade pipes, cables, switches, and valves essential for core facility installations.",
-          image: "/plumbing-electrical.jpg",
+          image: "/hydrant-cover.png",
           items: ["HDPE & PVC Water Pipes", "Submersible Water Pumps", "SGP & Black Steel Pipes", "Industrial Electrical Cables"],
           flagship: "Instalasi Hydrant — fire protection piping, pumps & valves",
           detail: {
@@ -793,7 +793,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Material Utilitas Proyek",
           slug: "infrastructure-materials",
           description: "Pipa, kabel, katup, dan komponen listrik berkualitas tinggi untuk menunjang infrastruktur pabrik.",
-          image: "/plumbing-electrical.jpg",
+          image: "/hydrant-cover.png",
           items: ["Pipa Air HDPE & PVC", "Pompa Air Submersible", "Pipa Besi SGP & Hitam", "Kabel Listrik Industri NYY/NYFGBY"],
           flagship: "Instalasi Hydrant — perpipaan proteksi kebakaran, pompa & katup",
           detail: {
