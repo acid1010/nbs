@@ -222,7 +222,7 @@ export default function HomePage() {
       <main className="flex-1">
 
         {/* 3. Hero — Full-bleed slider first, headline below (WBN flow) */}
-        <section id="home" className="relative bg-white overflow-hidden">
+        <section id="home" className="relative bg-white/70 backdrop-blur-md overflow-hidden">
 
           {/* Full-bleed slider */}
           <div
@@ -312,7 +312,7 @@ export default function HomePage() {
         </section>
 
         {/* 4. Featured Products (moved up — WBN flow) */}
-        <section id="products" className="py-24 bg-white border-b border-zinc-200">
+        <section id="products" className="py-24 bg-white/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
 
             <div className="text-center mb-16">
@@ -399,7 +399,7 @@ export default function HomePage() {
         </section>
 
         {/* 5. Supplier proof — follows the product-first WBN Safety flow. */}
-        <section id="about" className="py-24 bg-canvas-parchment border-y border-zinc-200">
+        <section id="about" className="py-24 bg-canvas-parchment/70 backdrop-blur-md border-y border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">
@@ -475,7 +475,7 @@ export default function HomePage() {
 
 
         {/* 7. Projects / Portfolio Section (Editorial Style Layout) */}
-        <section id="projects" className="py-24 bg-white">
+        <section id="projects" className="py-24 bg-white/70 backdrop-blur-md">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">
@@ -540,7 +540,7 @@ export default function HomePage() {
         </section>
 
         {/* 8. Testimonials Section */}
-        <section id="testimonials" className="py-24 bg-canvas-parchment border-y border-zinc-200">
+        <section id="testimonials" className="py-24 bg-canvas-parchment/70 backdrop-blur-md border-y border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
 
             <div className="text-center mb-16">
@@ -577,7 +577,7 @@ export default function HomePage() {
         </section>
 
         {/* Contact Us Section (Two Columns: Maps/Info & Interactive form) */}
-        <section id="contact" className="py-24 bg-white">
+        <section id="contact" className="py-24 bg-white/70 backdrop-blur-md">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">

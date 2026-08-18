@@ -187,7 +187,7 @@ export default async function ProductDetailPage({
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col font-sans text-ink bg-white">
+    <div className="relative min-h-screen flex flex-col font-sans text-ink bg-white/60">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -229,7 +229,7 @@ export default async function ProductDetailPage({
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="bg-canvas-parchment border-b border-zinc-200">
+        <div className="bg-canvas-parchment/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6 py-3 flex items-center gap-2 text-[12px] text-zinc-500">
             <Link href={`/${langSuffix}`} className="hover:text-primary transition-colors">
               {t.nav.home}
@@ -244,7 +244,7 @@ export default async function ProductDetailPage({
         </div>
 
         {/* Hero: image + intro */}
-        <section className="py-12 md:py-16 bg-white border-b border-zinc-200">
+        <section className="py-12 md:py-16 bg-white/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="relative aspect-[16/11] w-full rounded-lg overflow-hidden border border-zinc-200 bg-zinc-50 shadow-2xs">
               <Image
@@ -286,7 +286,7 @@ export default async function ProductDetailPage({
         </section>
 
         {/* Overview + Key items */}
-        <section className="py-16 bg-canvas-parchment border-b border-zinc-200">
+        <section className="py-16 bg-canvas-parchment/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6 grid md:grid-cols-5 gap-10">
             <div className="md:col-span-3">
               <h2 className="apple-display-md text-ink mb-6">{t.productDetail.overviewTitle}</h2>
@@ -317,7 +317,7 @@ export default async function ProductDetailPage({
         </section>
 
         {/* Specifications */}
-        <section className="py-16 bg-white border-b border-zinc-200">
+        <section className="py-16 bg-white/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
             <h2 className="apple-display-md text-ink mb-10 text-center">{t.productDetail.specsTitle}</h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -349,7 +349,7 @@ export default async function ProductDetailPage({
         </section>
 
         {/* Applications + Gallery */}
-        <section className="py-16 bg-canvas-parchment border-b border-zinc-200">
+        <section className="py-16 bg-canvas-parchment/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6 grid md:grid-cols-2 gap-10 items-start">
             <div>
               <h2 className="apple-display-md text-ink mb-6">{t.productDetail.applicationsTitle}</h2>
@@ -401,7 +401,7 @@ export default async function ProductDetailPage({
         </section>
 
         {/* Related projects */}
-        <section className="py-16 bg-white border-b border-zinc-200">
+        <section className="py-16 bg-white/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
             <h2 className="apple-display-md text-ink mb-10 text-center">{t.productDetail.relatedTitle}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -445,7 +445,7 @@ export default async function ProductDetailPage({
         </section>
 
         {/* Quotation form section */}
-        <section className="py-16 bg-canvas-parchment">
+        <section className="py-16 bg-canvas-parchment/70 backdrop-blur-md">
           <div className="max-w-[980px] mx-auto px-6 grid md:grid-cols-2 gap-10 items-start">
             {/* Pitch + direct contact shortcuts */}
             <div className="flex flex-col">

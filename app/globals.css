@@ -56,12 +56,47 @@ html {
 }
 
 body {
-  background-color: var(--background);
+  background-color: #f6f8f7;
+  /* Layered teal/navy tinted gradient mesh + subtle dot texture (brand palette) */
+  background-image:
+    radial-gradient(1100px 750px at 88% -8%, rgba(10, 107, 104, 0.10), transparent 60%),
+    radial-gradient(950px 700px at -8% 28%, rgba(10, 107, 104, 0.08), transparent 55%),
+    radial-gradient(1000px 700px at 55% 115%, rgba(29, 29, 31, 0.06), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='2' cy='2' r='1' fill='%230a6b68' fill-opacity='0.06'/%3E%3Ccircle cx='14' cy='14' r='1' fill='%230a6b68' fill-opacity='0.04'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: 1100px 750px, 950px 700px, 1000px 700px, 24px 24px;
+  background-position: 88% -8%, -8% 28%, 55% 115%, 0 0;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
   color: var(--foreground);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Living teal glow drifting slowly behind frosted sections */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 420px at 30% 35%, rgba(78, 201, 196, 0.10), transparent 60%),
+    radial-gradient(720px 520px at 72% 68%, rgba(10, 107, 104, 0.09), transparent 60%);
+  animation: bg-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes bg-drift {
+  from { transform: translate3d(-2%, -1%, 0); }
+  to { transform: translate3d(2%, 1%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+  .animate-fade-in-up, .animate-fade-in {
+    animation: none;
+  }
 }
 
 /* Typography Cadence matching DESIGN.md */

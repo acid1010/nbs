@@ -489,7 +489,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Industrial Technical Tools",
           slug: "industrial-technical-tools",
           description: "Heavy-duty fabrication and assembly machinery designed to withstand rigorous daily field operations.",
-          image: "/technical-tools.jpg",
+          image: "/technical-tools-cover.png",
           items: ["Inverter Welding Machine", "Heavy Duty Angle Grinders", "Cordless Impact Drills", "Mechanic Tool Set (120+ pcs)"],
           detail: {
             tagline: "Workshop-grade tools built for daily field abuse",
@@ -1009,7 +1009,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Mesin & Perkakas Teknik",
           slug: "industrial-technical-tools",
           description: "Perkakas kerja industri yang dirancang untuk daya tahan maksimal pada operasional berat harian.",
-          image: "/technical-tools.jpg",
+          image: "/technical-tools-cover.png",
           items: ["Mesin Las Inverter", "Gerinda Tangan Heavy-Duty", "Bor Baterai (Cordless Impact)", "Set Kunci Bengkel (120+ Pcs)"],
           detail: {
             tagline: "Perkakas kelas workshop untuk kerja lapangan berat",
