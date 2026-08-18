@@ -382,7 +382,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "K3 Safety Gear",
           slug: "k3-safety-gear",
           description: "Certified safety equipment protecting workers from head to toe, compliant with SNI and international standards.",
-          image: "/safety-equipment.jpg",
+          image: "/safety-equipment-cover.png",
           items: ["SNI Safety Helmets", "Heavy-duty Safety Boots", "Reflective Safety Vests", "Chemical Resistant Gloves"],
           detail: {
             tagline: "Certified protection, complete documentation",
@@ -901,7 +901,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Alat Pelindung Diri (APD)",
           slug: "k3-safety-gear",
           description: "Peralatan keselamatan bersertifikat SNI untuk perlindungan menyeluruh pekerja proyek Anda.",
-          image: "/safety-equipment.jpg",
+          image: "/safety-equipment-cover.png",
           items: ["Helm Safety SNI", "Sepatu Safety Konstruksi", "Rompi Safety Reflektif", "Sarung Tangan Tahan Kimia"],
           detail: {
             tagline: "Perlindungan bersertifikat, dokumentasi lengkap",
