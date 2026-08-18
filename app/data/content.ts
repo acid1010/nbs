@@ -1,3 +1,5 @@
+import { zh } from "./content-zh";
+
 export interface ServiceItem {
   title: string;
   description: string;
@@ -165,7 +167,7 @@ export interface ContentData {
   };
 }
 
-export const content: { en: ContentData; id: ContentData } = {
+export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
   en: {
     meta: {
       title: "PT. Nyi Bahari Steel | Heavy Equipment, K3 Safety & Manpower",
@@ -1204,10 +1206,11 @@ export const content: { en: ContentData; id: ContentData } = {
       copyright: "© 2026 PT. Nyi Bahari Steel. Semua hak dilindungi.",
       legal: "Membangun dengan jaminan keselamatan dan kekuatan baja."
     }
-  }
+  },
+  zh,
 };
 
-export type Language = "en" | "id";
+export type Language = "en" | "id" | "zh";
 
 /** Canonical product slugs (from the default/id catalog). */
 export const productSlugs: string[] = content.id.products.list.map((p) => p.slug);

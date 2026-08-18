@@ -80,7 +80,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const { lang } = await searchParams;
-  const language: Language = lang === "en" ? "en" : "id";
+  const language: Language = lang === "en" || lang === "zh" ? lang : "id";
   const product = content[language].products.list.find((p) => p.slug === slug);
   if (!product) return {};
 
@@ -96,6 +96,7 @@ export async function generateMetadata({
       languages: {
         en: `/products/${slug}?lang=en`,
         id: `/products/${slug}`,
+        zh: `/products/${slug}?lang=zh`,
       },
     },
     openGraph: {
@@ -127,7 +128,7 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params;
   const { lang } = await searchParams;
-  const language: Language = lang === "en" ? "en" : "id";
+  const language: Language = lang === "en" || lang === "zh" ? lang : "id";
   const t = content[language];
   const product = t.products.list.find((p) => p.slug === slug);
   if (!product) notFound();
@@ -141,7 +142,7 @@ export default async function ProductDetailPage({
       : `Hello, I would like to request a quotation for: ${product.category}`
   );
   const waHref = `https://wa.me/${waNumber}?text=${waText}`;
-  const langSuffix = language === "en" ? "?lang=en" : "";
+  const langSuffix = language === "id" ? "" : `?lang=${language}`;
 
   const jsonLd = {
     "@context": "https://schema.org",

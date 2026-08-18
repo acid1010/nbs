@@ -19,7 +19,7 @@ const heroSlides = [
 ];
 
 export default function HomePage() {
-  const [lang, setLang] = useState<"en" | "id">("id"); // Default to Indonesian
+  const [lang, setLang] = useState<"en" | "id" | "zh">("id"); // Default to Indonesian
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [selectedService, setSelectedService] = useState(content.id.products.list[0].category);
@@ -49,7 +49,7 @@ export default function HomePage() {
   // Direct deep-link to WeChat ID — registered by both mobile app and desktop PC client
   const wechatHref = `weixin://contacts/profile/${encodeURIComponent(t.contact.wechatId)}`;
 
-  const selectLanguage = (nextLang: "en" | "id") => {
+  const selectLanguage = (nextLang: "en" | "id" | "zh") => {
     setLang(nextLang);
     setSelectedService(content[nextLang].products.list[0].category);
   };
@@ -171,6 +171,12 @@ export default function HomePage() {
               className={`px-2 py-0.5 rounded-[4px] cursor-pointer transition-colors ${lang === "id" ? "bg-primary text-white" : "text-zinc-400 hover:text-white"}`}
             >
               ID
+            </button>
+            <button 
+              onClick={() => selectLanguage("zh")} 
+              className={`px-2 py-0.5 rounded-[4px] cursor-pointer transition-colors ${lang === "zh" ? "bg-primary text-white" : "text-zinc-400 hover:text-white"}`}
+            >
+              中文
             </button>
           </div>
 
@@ -319,10 +325,10 @@ export default function HomePage() {
               {t.products.list.map((prod, idx) => (
                 <div
                   key={idx}
-                  onClick={() => router.push(`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`)}
+                  onClick={() => router.push(`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`)}
                   role="link"
                   tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === "Enter") router.push(`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`); }}
+                  onKeyDown={(e) => { if (e.key === "Enter") router.push(`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`); }}
                   className="bg-white rounded-lg border border-zinc-200/80 shadow-[rgba(0,0,0,0.02)_0px_5px_15px] overflow-hidden flex flex-col justify-between group hover:shadow-[rgba(0,0,0,0.08)_0px_10px_25px] transition-all duration-300 cursor-pointer"
                 >
                   <div>
@@ -371,7 +377,7 @@ export default function HomePage() {
                   {/* Actions footer */}
                   <div className="p-6 pt-0 flex gap-3">
                     <Link
-                      href={`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`}
+                      href={`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`}
                       className="apple-btn-active flex-1 border border-zinc-300 hover:border-zinc-500 text-ink text-xs font-semibold py-3 rounded-md transition-colors text-center"
                     >
                       {t.products.ctaDetails}
@@ -738,7 +744,7 @@ export default function HomePage() {
               {t.products.list.map((prod, idx) => (
                 <Link
                   key={idx}
-                  href={`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`}
+                  href={`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`}
                   className="text-left hover:text-white transition-colors truncate"
                 >
                   {prod.category}

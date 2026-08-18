@@ -47,6 +47,7 @@ export default function ProductLanguageToggle({ lang }: { lang: Language }) {
     >
       {renderBtn("en", "EN")}
       {renderBtn("id", "ID")}
+      {renderBtn("zh", "中文")}
     </div>
   );
 }
