@@ -272,7 +272,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Project Manpower Outsourcing",
           slug: "project-manpower-outsourcing",
           description: "Skilled and semi-skilled labor mobilization — welders, fitters, operators, riggers, and general helpers — deployed flexibly for construction and industrial sites.",
-          image: "/manpower-outsourcing.jpg",
+          image: "/manpower-outsourcing-cover.png",
           items: ["Certified Welders & Fitters", "Heavy Equipment Operators", "Riggers & Scaffolders", "General Helpers & Technicians"],
           detail: {
             tagline: "Certified, field-proven crews ready to mobilize",
@@ -791,7 +791,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Outsourcing Tenaga Kerja Proyek",
           slug: "project-manpower-outsourcing",
           description: "Penyediaan tenaga kerja terampil dan semi-terampil — tukang las, fitter, operator, rigger, dan helper — yang dikerahkan secara fleksibel untuk proyek konstruksi dan industri.",
-          image: "/manpower-outsourcing.jpg",
+          image: "/manpower-outsourcing-cover.png",
           items: ["Tukang Las & Fitter Bersertifikat", "Operator Alat Berat", "Rigger & Perancah", "Helper & Teknisi Umum"],
           detail: {
             tagline: "Tim bersertifikat dan berpengalaman, siap dimobilisasi",
