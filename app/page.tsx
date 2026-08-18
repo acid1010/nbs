@@ -46,9 +46,8 @@ export default function HomePage() {
   };
 
   const t = content[lang];
-  const wechatDeepLink = `weixin://contacts/profile/${encodeURIComponent(t.contact.wechatId)}`;
-  const wechatHttps = t.contact.wechatUrl.trim() || "https://web.wechat.com/";
-  const [wechatHref, setWechatHref] = useState(wechatHttps);
+  // Direct deep-link to WeChat ID — registered by both mobile app and desktop PC client
+  const wechatHref = `weixin://contacts/profile/${encodeURIComponent(t.contact.wechatId)}`;
 
   const selectLanguage = (nextLang: "en" | "id") => {
     setLang(nextLang);
@@ -60,12 +59,6 @@ export default function HomePage() {
     document.title = t.meta.title;
     document.documentElement.lang = lang;
   }, [lang, t.meta.title]);
-
-  // Mobile → WeChat app by ID; desktop → https
-  useEffect(() => {
-    const mobile = /Android|iPhone|iPad|iPod|Mobile|MicroMessenger/i.test(navigator.userAgent);
-    setWechatHref(mobile ? wechatDeepLink : wechatHttps);
-  }, [wechatDeepLink, wechatHttps]);
 
 
 
