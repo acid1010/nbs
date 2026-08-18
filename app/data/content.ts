@@ -327,7 +327,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Heavy Equipment Fleet",
           slug: "heavy-equipment-fleet",
           description: "High-performance loaders, excavators, and utility machinery available for flexible short or long-term lease.",
-          image: "/heavy-equipment.jpg",
+          image: "/heavy-equipment-cover.png",
           items: ["Excavator 20-Ton Class", "Forklift 3-10 Ton Capacity", "Mobile Crane 25-50 Ton", "Vibro Roller 10-Ton"],
           detail: {
             tagline: "Well-maintained machinery with certified operators",
@@ -846,7 +846,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Armada Alat Berat",
           slug: "heavy-equipment-fleet",
           description: "Excavator, forklift, dan crane berspesifikasi tinggi yang tersedia untuk sewa jangka pendek maupun jangka panjang.",
-          image: "/heavy-equipment.jpg",
+          image: "/heavy-equipment-cover.png",
           items: ["Excavator Kelas 20 Ton", "Forklift Kapasitas 3-10 Ton", "Mobile Crane 25-50 Ton", "Vibro Roller 10 Ton"],
           detail: {
             tagline: "Mesin terawat dengan operator bersertifikat",

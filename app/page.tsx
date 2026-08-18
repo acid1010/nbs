@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { content } from "./data/content";
 import QuoteForm from "./components/quote-form";
+import { useRouter } from "next/navigation";
 
 // Real job-site photos cycled in the hero slider (brochure first)
 const heroSlides = [
@@ -22,6 +23,7 @@ export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [selectedService, setSelectedService] = useState(content.id.products.list[0].category);
+  const router = useRouter();
 
 
   // Hero slider state
@@ -324,7 +326,11 @@ export default function HomePage() {
               {t.products.list.map((prod, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-lg border border-zinc-200/80 shadow-[rgba(0,0,0,0.02)_0px_5px_15px] overflow-hidden flex flex-col justify-between group hover:shadow-[rgba(0,0,0,0.08)_0px_10px_25px] transition-all duration-300"
+                  onClick={() => router.push(`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`)}
+                  role="link"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === "Enter") router.push(`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`); }}
+                  className="bg-white rounded-lg border border-zinc-200/80 shadow-[rgba(0,0,0,0.02)_0px_5px_15px] overflow-hidden flex flex-col justify-between group hover:shadow-[rgba(0,0,0,0.08)_0px_10px_25px] transition-all duration-300 cursor-pointer"
                 >
                   <div>
                     {/* Header */}
@@ -371,7 +377,7 @@ export default function HomePage() {
                       {t.products.ctaDetails}
                     </Link>
                     <button
-                      onClick={() => triggerQuoteForProduct(prod.category)}
+                      onClick={(e) => { e.stopPropagation(); triggerQuoteForProduct(prod.category); }}
                       className="apple-btn-active flex-1 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold py-3 rounded-md transition-colors cursor-pointer text-center block"
                     >
                       {t.products.ctaQuote}
