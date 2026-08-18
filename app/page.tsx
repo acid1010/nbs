@@ -358,7 +358,7 @@ export default function HomePage() {
                       {prod.flagship && (
                         <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-md px-3 py-2 mb-3">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                          <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Unggulan</span>
+                          <span className="text-[10px] font-bold text-primary uppercase tracking-widest">{lang === "zh" ? "主打" : lang === "en" ? "Flagship" : "Unggulan"}</span>
                           <span className="text-xs font-semibold text-ink">{prod.flagship}</span>
                         </div>
                       )}
