@@ -518,7 +518,7 @@ export default function HomePage() {
 
 
         {/* 7. Projects / Portfolio Section (Editorial Style Layout) */}
-        <section id="projects" className="py-24 bg-white/70 backdrop-blur-md">
+        <section id="projects" className="py-24 bg-white/70">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">
@@ -707,7 +707,7 @@ export default function HomePage() {
         </section>
 
         {/* 8. Testimonials Section */}
-        <section id="testimonials" className="py-24 bg-canvas-parchment/70 backdrop-blur-md border-y border-zinc-200">
+        <section id="testimonials" className="py-24 bg-canvas-parchment/70 border-y border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
 
             <div className="text-center mb-16">
