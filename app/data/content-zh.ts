@@ -532,7 +532,8 @@ export const zh: ContentData = {
   },
   testimonials: {
     title: "客户评价",
-    subtitle: "合作伙伴与客户对 PT. Nyi Bahari Steel 的评价。",
+    subtitle: "合作伙伴与客户对与 PT. Nyi Bahari Steel 合作的评价。",
+    cta: "查看全部评价",
     list: [
       {
         name: "Andi Pratama",

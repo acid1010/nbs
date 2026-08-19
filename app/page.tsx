@@ -20,6 +20,7 @@ const heroSlides = [
 
 export default function HomePage() {
   const [lang, setLang] = useState<"en" | "id" | "zh">("id"); // Default to Indonesian
+  const [showAllTestimonials, setShowAllTestimonials] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [selectedService, setSelectedService] = useState(content.id.products.list[0].category);
@@ -547,30 +548,86 @@ export default function HomePage() {
               <h2 className="apple-display-md text-ink">{t.testimonials.subtitle}</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
-              {t.testimonials.list.map((tm, idx) => (
-                <div key={idx} className="bg-white rounded-lg p-6 border border-zinc-200 shadow-2xs flex flex-col gap-4">
-                  {/* Star rating */}
-                  <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className={`w-4 h-4 ${i < tm.rating ? "text-primary" : "text-zinc-200"}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.37 4.24a1 1 0 00.95.69h4.46c.97 0 1.37 1.24.59 1.81l-3.61 2.62a1 1 0 00-.36 1.12l1.38 4.24c.3.92-.76 1.69-1.54 1.12l-3.61-2.62a1 1 0 00-1.18 0l-3.61 2.62c-.78.57-1.84-.2-1.54-1.12l1.38-4.24a1 1 0 00-.36-1.12L2.32 9.67c-.78-.57-.38-1.81.59-1.81h4.46a1 1 0 00.95-.69L9.05 2.93z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-[14px] text-zinc-600 leading-relaxed italic">&ldquo;{tm.quote}&rdquo;</p>
-                  <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-100">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-sm shrink-0">
-                      {tm.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
-                    </div>
-                    <div>
-                      <div className="text-[13px] font-semibold text-ink">{tm.name}</div>
-                      <div className="text-[11px] text-zinc-500">{tm.role}</div>
-                    </div>
+            {/* Teaser card — klik untuk lihat semua testimoni */}
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllTestimonials(true)}
+                className="group w-full max-w-xl bg-white rounded-lg p-8 border border-zinc-200 shadow-2xs hover:shadow-lg hover:-translate-y-0.5 hover:border-primary/30 transition-all text-left cursor-pointer"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-11 h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="text-[15px] font-semibold text-ink">{t.testimonials.title}</div>
+                    <div className="text-[12px] text-zinc-500">{t.testimonials.list.length} testimoni</div>
                   </div>
                 </div>
-              ))}
+                <p className="text-[15px] text-zinc-600 leading-relaxed italic">&ldquo;{t.testimonials.list[0].quote}&rdquo;</p>
+                <div className="flex items-center gap-3 mt-5 pt-4 border-t border-zinc-100">
+                  <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-xs shrink-0">
+                    {t.testimonials.list[0].name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                  </div>
+                  <div className="text-[13px] font-semibold text-ink">{t.testimonials.list[0].name}</div>
+                  <span className="ml-auto text-[12px] font-semibold text-primary group-hover:underline">{t.testimonials.cta} →</span>
+                </div>
+              </button>
             </div>
+
+            {/* Modal: semua testimoni */}
+            {showAllTestimonials && (
+              <div
+                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4"
+                onClick={() => setShowAllTestimonials(false)}
+              >
+                <div
+                  className="w-full max-w-3xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-8 relative my-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setShowAllTestimonials(false)}
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center cursor-pointer transition-colors"
+                    aria-label={t.testimonials.cta}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                  <div className="text-center mb-8 pr-10">
+                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">{t.testimonials.title}</span>
+                    <h3 className="apple-display-md text-ink mt-1">{t.testimonials.subtitle}</h3>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    {t.testimonials.list.map((tm, idx) => (
+                      <div key={idx} className="bg-white rounded-lg p-6 border border-zinc-200 shadow-2xs flex flex-col gap-4">
+                        {/* Star rating */}
+                        <div className="flex gap-1">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <svg key={i} className={`w-4 h-4 ${i < tm.rating ? "text-primary" : "text-zinc-200"}`} fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.37 4.24a1 1 0 00.95.69h4.46c.97 0 1.37 1.24.59 1.81l-3.61 2.62a1 1 0 00-.36 1.12l1.38 4.24c.3.92-.76 1.69-1.54 1.12l-3.61-2.62a1 1 0 00-1.18 0l-3.61 2.62c-.78.57-1.84-.2-1.54-1.12l1.38-4.24a1 1 0 00-.36-1.12L2.32 9.67c-.78-.57-.38-1.81.59-1.81h4.46a1 1 0 00.95-.69L9.05 2.93z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <p className="text-[14px] text-zinc-600 leading-relaxed italic">&ldquo;{tm.quote}&rdquo;</p>
+                        <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-100">
+                          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-sm shrink-0">
+                            {tm.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                          </div>
+                          <div>
+                            <div className="text-[13px] font-semibold text-ink">{tm.name}</div>
+                            <div className="text-[11px] text-zinc-500">{tm.role}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
           </div>
         </section>

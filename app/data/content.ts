@@ -126,6 +126,7 @@ export interface ContentData {
   testimonials: {
     title: string;
     subtitle: string;
+    cta: string;
     list: TestimonialItem[];
   };
   contact: {
@@ -617,6 +618,7 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
     testimonials: {
       title: "Testimonials",
       subtitle: "What partners and clients say about working with PT. Nyi Bahari Steel.",
+      cta: "View all testimonials",
       list: [
         {
           name: "Andi Pratama",
@@ -1137,6 +1139,7 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
     testimonials: {
       title: "Testimoni",
       subtitle: "Apa kata mitra dan klien tentang bekerja sama dengan PT. Nyi Bahari Steel.",
+      cta: "Lihat semua testimoni",
       list: [
         {
           name: "Andi Pratama",
