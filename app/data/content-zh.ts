@@ -530,6 +530,12 @@ export const zh: ContentData = {
       },
     ],
   },
+  projectGallery: {
+    title: "项目活动照片",
+    subtitle: "我们项目现场活动的照片。",
+    cta: "查看相册",
+    empty: "暂无照片。",
+  },
   testimonials: {
     title: "客户评价",
     subtitle: "合作伙伴与客户对与 PT. Nyi Bahari Steel 合作的评价。",

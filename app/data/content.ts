@@ -123,6 +123,12 @@ export interface ContentData {
     subtitle: string;
     list: ProjectItem[];
   };
+  projectGallery: {
+    title: string;
+    subtitle: string;
+    cta: string;
+    empty: string;
+  };
   testimonials: {
     title: string;
     subtitle: string;
@@ -614,6 +620,12 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
           image: "/real_life_photos6.jpeg"
         }
       ]
+    },
+    projectGallery: {
+      title: "Project Photo Gallery",
+      subtitle: "Photos of our project activities in the field.",
+      cta: "View gallery",
+      empty: "No photos yet.",
     },
     testimonials: {
       title: "Testimonials",
@@ -1135,6 +1147,12 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
           image: "/real_life_photos6.jpeg"
         }
       ]
+    },
+    projectGallery: {
+      title: "Galeri Foto Proyek",
+      subtitle: "Foto-foto kegiatan proyek kami di lapangan.",
+      cta: "Lihat galeri",
+      empty: "Belum ada foto — upload ke public/projects/.",
     },
     testimonials: {
       title: "Testimoni",

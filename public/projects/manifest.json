@@ -1,0 +1,13 @@
+{
+  "groups": [
+    {
+      "title": "Contoh",
+      "photos": [
+        "/projects/contoh/01-alat-berat.png",
+        "/projects/contoh/02-instalasi-hydrant.png",
+        "/projects/contoh/03-apd.png",
+        "/projects/contoh/04-perkakas.png"
+      ]
+    }
+  ]
+}

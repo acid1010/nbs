@@ -21,6 +21,48 @@ const heroSlides = [
 export default function HomePage() {
   const [lang, setLang] = useState<"en" | "id" | "zh">("id"); // Default to Indonesian
   const [showAllTestimonials, setShowAllTestimonials] = useState(false);
+  const [showProjectGallery, setShowProjectGallery] = useState(false);
+  const [galleryData, setGalleryData] = useState<{ groups: { title: string; photos: string[] }[] } | null>(null);
+  const [galleryError, setGalleryError] = useState(false);
+  const [flatPhotos, setFlatPhotos] = useState<{ src: string; title: string }[]>([]);
+  const [lightbox, setLightbox] = useState<{ src: string; title: string } | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const openProjectGallery = async () => {
+    setShowProjectGallery(true);
+    try {
+      const res = await fetch("/projects/manifest.json");
+      if (!res.ok) throw new Error("no manifest");
+      const data = await res.json();
+      setGalleryData(data);
+      const flat: { src: string; title: string }[] = [];
+      data.groups.forEach((g: { title: string; photos: string[] }) =>
+        g.photos.forEach((p: string) => flat.push({ src: p, title: g.title }))
+      );
+      setFlatPhotos(flat);
+      setGalleryError(false);
+    } catch {
+      setGalleryError(true);
+    }
+  };
+
+  const navLightbox = (delta: number) => {
+    if (!flatPhotos.length) return;
+    const next = (lightboxIndex + delta + flatPhotos.length) % flatPhotos.length;
+    setLightboxIndex(next);
+    setLightbox(flatPhotos[next]);
+  };
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight") navLightbox(1);
+      if (e.key === "ArrowLeft") navLightbox(-1);
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [selectedService, setSelectedService] = useState(content.id.products.list[0].category);
@@ -535,6 +577,128 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+
+            {/* Teaser card galeri foto proyek — klik untuk lihat semua foto */}
+            <div className="flex justify-center mt-10">
+              <button
+                type="button"
+                onClick={openProjectGallery}
+                className="group w-full max-w-xl bg-white rounded-lg p-6 border-2 border-dashed border-zinc-300 hover:border-primary/40 hover:shadow-lg transition-all text-left cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="text-[15px] font-semibold text-ink">{t.projectGallery.title}</div>
+                    <div className="text-[12px] text-zinc-500">{t.projectGallery.subtitle}</div>
+                  </div>
+                  <span className="ml-auto text-[12px] font-semibold text-primary group-hover:underline shrink-0">{t.projectGallery.cta} →</span>
+                </div>
+              </button>
+            </div>
+
+            {/* Modal galeri foto proyek */}
+            {showProjectGallery && (
+              <div
+                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4"
+                onClick={() => setShowProjectGallery(false)}
+              >
+                <div
+                  className="w-full max-w-4xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-8 relative my-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setShowProjectGallery(false)}
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center cursor-pointer transition-colors"
+                    aria-label={t.projectGallery.cta}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                  <div className="text-center mb-8 pr-10">
+                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">{t.projectGallery.title}</span>
+                    <h3 className="apple-display-md text-ink mt-1">{t.projectGallery.subtitle}</h3>
+                  </div>
+                  {galleryError ? (
+                    <p className="text-center text-zinc-500 py-10">{t.projectGallery.empty}</p>
+                  ) : !galleryData ? (
+                    <p className="text-center text-zinc-400 py-10">Loading…</p>
+                  ) : (
+                    galleryData.groups.map((g) => (
+                      <div key={g.title} className="mb-8 last:mb-0">
+                        <h4 className="text-[13px] font-semibold text-zinc-600 uppercase tracking-widest mb-4">{g.title}</h4>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                          {g.photos.map((p) => (
+                            <button
+                              key={p}
+                              type="button"
+                              onClick={() => {
+                                const idx = flatPhotos.findIndex((f) => f.src === p);
+                                setLightboxIndex(idx);
+                                setLightbox({ src: p, title: g.title });
+                              }}
+                              className="aspect-[4/3] overflow-hidden rounded-lg border border-zinc-200 cursor-zoom-in group/thumb bg-zinc-100"
+                            >
+                              <img src={p} alt={g.title} loading="lazy" className="w-full h-full object-cover group-hover/thumb:scale-105 transition-transform duration-300" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Lightbox foto */}
+            {lightbox && (
+              <div
+                className="fixed inset-0 z-[95] bg-black/90 flex items-center justify-center p-4"
+                onClick={() => setLightbox(null)}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); navLightbox(-1); }}
+                  className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors text-2xl"
+                  aria-label="Previous"
+                >
+                  ‹
+                </button>
+                <img
+                  src={lightbox.src}
+                  alt={lightbox.title}
+                  className="max-w-full max-h-[85vh] rounded-lg shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); navLightbox(1); }}
+                  className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors text-2xl"
+                  aria-label="Next"
+                >
+                  ›
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLightbox(null)}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors"
+                  aria-label="Close"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/85 text-sm bg-black/40 px-4 py-1.5 rounded-full max-w-[90vw] truncate">
+                  {lightbox.title}
+                </div>
+              </div>
+            )}
 
           </div>
         </section>
