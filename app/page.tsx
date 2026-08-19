@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation";
 // Real job-site photos cycled in the hero slider (brochure first)
 const heroSlides = [
   "/brosur.jpeg",
-  "/real_life_photos.jpeg",
-  "/real_life_photos2.jpeg",
-  "/real_life_photos3.jpeg",
-  "/real_life_photos4.jpeg",
-  "/real_life_photos5.jpeg",
-  "/real_life_photos6.jpeg",
+  "/projects/instalasi-pipa-air/02_butt-fusion.jpg",
+  "/projects/instalasi-pipa-air/01_hdpe-trench.jpg",
+  "/projects/instalasi-pipa-air/03_valve-dn.jpg",
+  "/projects/instalasi-pipa-air/04_manifold-valve.jpg",
+  "/projects/workshop-fabrikasi/01_fabrikasi.jpg",
+  "/projects/instalasi-pipa-air/07_.jpg",
 ];
 
 export default function HomePage() {
@@ -105,13 +105,13 @@ export default function HomePage() {
 
 
 
-  // Auto-advance hero slider every 5s; pause on hover and honor reduced-motion
+  // Auto-advance hero slider every 3s; pause on hover and honor reduced-motion
   useEffect(() => {
     if (sliderPaused) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => {
       setSlide((s) => (s + 1) % heroSlides.length);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(id);
   }, [sliderPaused, slide]);
 
