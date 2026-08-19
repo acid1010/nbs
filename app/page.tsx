@@ -605,13 +605,14 @@ export default function HomePage() {
             {/* Modal galeri foto proyek */}
             {showProjectGallery && (
               <div
-                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4"
+                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm overflow-y-auto"
                 onClick={() => setShowProjectGallery(false)}
               >
                 <div
-                  className="w-full max-w-4xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-8 relative my-auto"
+                  className="min-h-full flex items-center justify-center p-4 sm:p-8"
                   onClick={(e) => e.stopPropagation()}
                 >
+                <div className="w-full max-w-4xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-6 sm:p-8 relative">
                   <button
                     type="button"
                     onClick={() => setShowProjectGallery(false)}
@@ -653,6 +654,7 @@ export default function HomePage() {
                       </div>
                     ))
                   )}
+                </div>
                 </div>
               </div>
             )}
@@ -745,13 +747,14 @@ export default function HomePage() {
             {/* Modal: semua testimoni */}
             {showAllTestimonials && (
               <div
-                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4"
+                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm overflow-y-auto"
                 onClick={() => setShowAllTestimonials(false)}
               >
                 <div
-                  className="w-full max-w-3xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-8 relative my-auto"
+                  className="min-h-full flex items-center justify-center p-4 sm:p-8"
                   onClick={(e) => e.stopPropagation()}
                 >
+                <div className="w-full max-w-3xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-6 sm:p-8 relative">
                   <button
                     type="button"
                     onClick={() => setShowAllTestimonials(false)}
@@ -790,6 +793,7 @@ export default function HomePage() {
                       </div>
                     ))}
                   </div>
+                </div>
                 </div>
               </div>
             )}
