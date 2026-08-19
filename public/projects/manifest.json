@@ -8,6 +8,27 @@
         "/projects/contoh/03-apd.png",
         "/projects/contoh/04-perkakas.png"
       ]
+    },
+    {
+      "title": "Instalasi pipa air",
+      "photos": [
+        "/projects/instalasi-pipa-air/01_hdpe-trench.jpg",
+        "/projects/instalasi-pipa-air/02_butt-fusion.jpg",
+        "/projects/instalasi-pipa-air/03_valve-dn.jpg",
+        "/projects/instalasi-pipa-air/04_manifold-valve.jpg",
+        "/projects/instalasi-pipa-air/05_.jpg",
+        "/projects/instalasi-pipa-air/06_.jpg",
+        "/projects/instalasi-pipa-air/07_.jpg",
+        "/projects/instalasi-pipa-air/08_.jpg",
+        "/projects/instalasi-pipa-air/09_.jpg",
+        "/projects/instalasi-pipa-air/10_.jpg"
+      ]
+    },
+    {
+      "title": "Workshop fabrikasi",
+      "photos": [
+        "/projects/workshop-fabrikasi/01_fabrikasi.jpg"
+      ]
     }
   ]
 }
