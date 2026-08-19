@@ -16,6 +16,7 @@ const heroSlides = [
   "/projects/instalasi-pipa-air/04_manifold-valve.jpg",
   "/projects/workshop-fabrikasi/01_fabrikasi.jpg",
   "/projects/instalasi-pipa-air/07_.jpg",
+  "/projects/instalasi-pipa-air/11_lokasi.jpg",
 ];
 
 export default function HomePage() {
