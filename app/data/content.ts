@@ -543,6 +543,59 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
               }
             ]
           }
+        },
+        {
+          "category": "Integrated Construction & Contracting Services",
+          "slug": "integrated-construction-contracting",
+          "description": "We provide comprehensive solutions for your land preparation and infrastructure needs. Our contracting services cover precise cut and fill work, high-standard soil compaction, and supporting installations. We ensure your land is ready for construction with optimal cost and time efficiency.",
+          "image": "/heavy-equipment.jpg",
+          "items": [
+            "Land Preparation",
+            "Cut and Fill",
+            "Soil Compaction",
+            "Supporting Installations"
+          ],
+          "detail": {
+            "tagline": "Land preparation and infrastructure in one integrated service",
+            "overview": [
+              "We provide comprehensive solutions for your land preparation and infrastructure needs. Our contracting services cover precise cut and fill work, high-standard soil compaction, and supporting installations. We ensure your land is ready for construction with optimal cost and time efficiency."
+            ],
+            "specGroups": [
+              {
+                "title": "Scope of Work",
+                "specs": [
+                  {
+                    "label": "Land Preparation",
+                    "value": "Comprehensive land preparation"
+                  },
+                  {
+                    "label": "Cut and Fill",
+                    "value": "Precise cut and fill work"
+                  },
+                  {
+                    "label": "Soil Compaction",
+                    "value": "High-standard soil compaction"
+                  },
+                  {
+                    "label": "Supporting Installations",
+                    "value": "Supporting infrastructure installations"
+                  }
+                ]
+              }
+            ],
+            "applications": [
+              "Land preparation for construction",
+              "Land grading and compaction",
+              "Supporting infrastructure works"
+            ],
+            "gallery": [
+              {
+                "src": "/heavy-equipment.jpg",
+                "alt": "Excavator for land preparation",
+                "caption": "Land preparation equipment"
+              }
+            ]
+          }
         }
       ]
     },
@@ -1067,6 +1120,59 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
                 src: "/technical-tools.jpg",
                 alt: "Perkakas teknik dan mesin industri yang dipasok oleh NBS",
                 caption: "Power tool heavy-duty & peralatan workshop"
+              }
+            ]
+          }
+        },
+        {
+          "category": "Layanan Konstruksi & Borongan Terintegrasi",
+          "slug": "integrated-construction-contracting",
+          "description": "Kami menyediakan solusi menyeluruh untuk persiapan lahan dan infrastruktur Anda. Layanan borongan kami mencakup pekerjaan cut and fill yang presisi, pemadatan tanah standar tinggi, hingga instalasi pendukung lainnya. Kami memastikan lahan Anda siap bangun dengan efisiensi biaya dan waktu yang optimal.",
+          "image": "/heavy-equipment.jpg",
+          "items": [
+            "Persiapan Lahan",
+            "Cut and Fill",
+            "Pemadatan Tanah",
+            "Instalasi Pendukung"
+          ],
+          "detail": {
+            "tagline": "Persiapan lahan dan infrastruktur dalam satu layanan terintegrasi",
+            "overview": [
+              "Kami menyediakan solusi menyeluruh untuk persiapan lahan dan infrastruktur Anda. Layanan borongan kami mencakup pekerjaan cut and fill yang presisi, pemadatan tanah standar tinggi, hingga instalasi pendukung lainnya. Kami memastikan lahan Anda siap bangun dengan efisiensi biaya dan waktu yang optimal."
+            ],
+            "specGroups": [
+              {
+                "title": "Lingkup Pekerjaan",
+                "specs": [
+                  {
+                    "label": "Persiapan Lahan",
+                    "value": "Persiapan lahan menyeluruh"
+                  },
+                  {
+                    "label": "Cut and Fill",
+                    "value": "Pekerjaan cut and fill yang presisi"
+                  },
+                  {
+                    "label": "Pemadatan Tanah",
+                    "value": "Pemadatan tanah standar tinggi"
+                  },
+                  {
+                    "label": "Instalasi Pendukung",
+                    "value": "Instalasi infrastruktur pendukung"
+                  }
+                ]
+              }
+            ],
+            "applications": [
+              "Persiapan lahan siap bangun",
+              "Perataan dan pemadatan tanah",
+              "Pekerjaan infrastruktur pendukung"
+            ],
+            "gallery": [
+              {
+                "src": "/heavy-equipment.jpg",
+                "alt": "Ekskavator untuk persiapan lahan",
+                "caption": "Peralatan persiapan lahan"
               }
             ]
           }
