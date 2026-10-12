@@ -265,7 +265,7 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
             "Vibro Roller",
             "Project support machinery",
           ],
-          image: "/cut-fill.png",
+          image: "/heavy-equipment.jpg",
         },
         {
           title: "Safety Equipment Supply",
@@ -776,7 +776,7 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
           slug: "integrated-construction-contracting",
           description:
             "We provide comprehensive solutions for your land preparation and infrastructure needs. Our contracting services cover precise cut and fill work, high-standard soil compaction, and supporting installations. We ensure your land is ready for construction with optimal cost and time efficiency.",
-          image: "/heavy-equipment.jpg",
+          image: "/cut-fill.png",
           items: [
             "Land Preparation",
             "Cut and Fill",
@@ -1610,7 +1610,7 @@ export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
           slug: "integrated-construction-contracting",
           description:
             "Kami menyediakan layanan persiapan lahan, meliputi cut and fill, pemadatan tanah, dan instalasi pendukung.",
-          image: "/heavy-equipment.jpg",
+          image: "/cut-fill.png",
           items: [
             "Persiapan Lahan",
             "Cut and Fill",
