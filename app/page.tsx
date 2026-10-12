@@ -5,22 +5,69 @@ import Image from "next/image";
 import Link from "next/link";
 import { content } from "./data/content";
 import QuoteForm from "./components/quote-form";
+import { useRouter } from "next/navigation";
 
-// Real job-site photos cycled in the hero slider
+// Real job-site photos cycled in the hero slider (brochure first)
 const heroSlides = [
-  "/real_life_photos.jpeg",
-  "/real_life_photos2.jpeg",
-  "/real_life_photos3.jpeg",
-  "/real_life_photos4.jpeg",
-  "/real_life_photos5.jpeg",
-  "/real_life_photos6.jpeg",
+  "/brosur.jpeg",
+  "/projects/instalasi-pipa-air/02_butt-fusion.jpg",
+  "/projects/instalasi-pipa-air/01_hdpe-trench.jpg",
+  "/projects/instalasi-pipa-air/03_valve-dn.jpg",
+  "/projects/instalasi-pipa-air/04_manifold-valve.jpg",
+  "/projects/workshop-fabrikasi/01_fabrikasi.jpg",
+  "/projects/instalasi-pipa-air/07_.jpg",
+  "/projects/instalasi-pipa-air/11_lokasi.jpg",
 ];
 
 export default function HomePage() {
-  const [lang, setLang] = useState<"en" | "id">("id"); // Default to Indonesian
+  const [lang, setLang] = useState<"en" | "id" | "zh">("id"); // Default to Indonesian
+  const [showAllTestimonials, setShowAllTestimonials] = useState(false);
+  const [showProjectGallery, setShowProjectGallery] = useState(false);
+  const [galleryData, setGalleryData] = useState<{ groups: { title: string; photos: string[] }[] } | null>(null);
+  const [galleryError, setGalleryError] = useState(false);
+  const [flatPhotos, setFlatPhotos] = useState<{ src: string; title: string }[]>([]);
+  const [lightbox, setLightbox] = useState<{ src: string; title: string } | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const openProjectGallery = async () => {
+    setShowProjectGallery(true);
+    try {
+      const res = await fetch("/projects/manifest.json");
+      if (!res.ok) throw new Error("no manifest");
+      const data = await res.json();
+      setGalleryData(data);
+      const flat: { src: string; title: string }[] = [];
+      data.groups.forEach((g: { title: string; photos: string[] }) =>
+        g.photos.forEach((p: string) => flat.push({ src: p, title: g.title }))
+      );
+      setFlatPhotos(flat);
+      setGalleryError(false);
+    } catch {
+      setGalleryError(true);
+    }
+  };
+
+  const navLightbox = (delta: number) => {
+    if (!flatPhotos.length) return;
+    const next = (lightboxIndex + delta + flatPhotos.length) % flatPhotos.length;
+    setLightboxIndex(next);
+    setLightbox(flatPhotos[next]);
+  };
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight") navLightbox(1);
+      if (e.key === "ArrowLeft") navLightbox(-1);
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [selectedService, setSelectedService] = useState(content.id.products.list[0].category);
+  const router = useRouter();
 
 
   // Hero slider state
@@ -43,11 +90,10 @@ export default function HomePage() {
   };
 
   const t = content[lang];
-  const wechatDeepLink = `weixin://contacts/profile/${encodeURIComponent(t.contact.wechatId)}`;
-  const wechatHttps = t.contact.wechatUrl.trim() || "https://web.wechat.com/";
-  const [wechatHref, setWechatHref] = useState(wechatHttps);
+  // Direct deep-link to WeChat ID — registered by both mobile app and desktop PC client
+  const wechatHref = `weixin://contacts/profile/${encodeURIComponent(t.contact.wechatId)}`;
 
-  const selectLanguage = (nextLang: "en" | "id") => {
+  const selectLanguage = (nextLang: "en" | "id" | "zh") => {
     setLang(nextLang);
     setSelectedService(content[nextLang].products.list[0].category);
   };
@@ -58,21 +104,15 @@ export default function HomePage() {
     document.documentElement.lang = lang;
   }, [lang, t.meta.title]);
 
-  // Mobile → WeChat app by ID; desktop → https
-  useEffect(() => {
-    const mobile = /Android|iPhone|iPad|iPod|Mobile|MicroMessenger/i.test(navigator.userAgent);
-    setWechatHref(mobile ? wechatDeepLink : wechatHttps);
-  }, [wechatDeepLink, wechatHttps]);
 
 
-
-  // Auto-advance hero slider every 5s; pause on hover and honor reduced-motion
+  // Auto-advance hero slider every 3s; pause on hover and honor reduced-motion
   useEffect(() => {
     if (sliderPaused) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => {
       setSlide((s) => (s + 1) % heroSlides.length);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(id);
   }, [sliderPaused, slide]);
 
@@ -176,6 +216,12 @@ export default function HomePage() {
             >
               ID
             </button>
+            <button 
+              onClick={() => selectLanguage("zh")} 
+              className={`px-2 py-0.5 rounded-[4px] cursor-pointer transition-colors ${lang === "zh" ? "bg-primary text-white" : "text-zinc-400 hover:text-white"}`}
+            >
+              中文
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -219,7 +265,7 @@ export default function HomePage() {
       <main className="flex-1">
 
         {/* 3. Hero — Full-bleed slider first, headline below (WBN flow) */}
-        <section id="home" className="relative bg-white overflow-hidden">
+        <section id="home" className="relative bg-white/70 backdrop-blur-md overflow-hidden">
 
           {/* Full-bleed slider */}
           <div
@@ -309,7 +355,7 @@ export default function HomePage() {
         </section>
 
         {/* 4. Featured Products (moved up — WBN flow) */}
-        <section id="products" className="py-24 bg-white border-b border-zinc-200">
+        <section id="products" className="py-24 bg-white/70 backdrop-blur-md border-b border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
 
             <div className="text-center mb-16">
@@ -323,7 +369,11 @@ export default function HomePage() {
               {t.products.list.map((prod, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-lg border border-zinc-200/80 shadow-[rgba(0,0,0,0.02)_0px_5px_15px] overflow-hidden flex flex-col justify-between group hover:shadow-[rgba(0,0,0,0.08)_0px_10px_25px] transition-all duration-300"
+                  onClick={() => router.push(`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`)}
+                  role="link"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === "Enter") router.push(`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`); }}
+                  className="bg-white rounded-lg border border-zinc-200/80 shadow-[rgba(0,0,0,0.02)_0px_5px_15px] overflow-hidden flex flex-col justify-between group hover:shadow-[rgba(0,0,0,0.08)_0px_10px_25px] transition-all duration-300 cursor-pointer"
                 >
                   <div>
                     {/* Header */}
@@ -349,6 +399,13 @@ export default function HomePage() {
 
                     {/* Key Items List */}
                     <div className="p-6">
+                      {prod.flagship && (
+                        <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-md px-3 py-2 mb-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                          <span className="text-[10px] font-bold text-primary uppercase tracking-widest">{lang === "zh" ? "主打" : lang === "en" ? "Flagship" : "Unggulan"}</span>
+                          <span className="text-xs font-semibold text-ink">{prod.flagship}</span>
+                        </div>
+                      )}
                       <h4 className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Featured Inventory</h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {prod.items.map((item, idy) => (
@@ -364,13 +421,13 @@ export default function HomePage() {
                   {/* Actions footer */}
                   <div className="p-6 pt-0 flex gap-3">
                     <Link
-                      href={`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`}
+                      href={`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`}
                       className="apple-btn-active flex-1 border border-zinc-300 hover:border-zinc-500 text-ink text-xs font-semibold py-3 rounded-md transition-colors text-center"
                     >
                       {t.products.ctaDetails}
                     </Link>
                     <button
-                      onClick={() => triggerQuoteForProduct(prod.category)}
+                      onClick={(e) => { e.stopPropagation(); triggerQuoteForProduct(prod.category); }}
                       className="apple-btn-active flex-1 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold py-3 rounded-md transition-colors cursor-pointer text-center block"
                     >
                       {t.products.ctaQuote}
@@ -385,7 +442,7 @@ export default function HomePage() {
         </section>
 
         {/* 5. Supplier proof — follows the product-first WBN Safety flow. */}
-        <section id="about" className="py-24 bg-canvas-parchment border-y border-zinc-200">
+        <section id="about" className="py-24 bg-canvas-parchment/70 backdrop-blur-md border-y border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">
@@ -461,7 +518,7 @@ export default function HomePage() {
 
 
         {/* 7. Projects / Portfolio Section (Editorial Style Layout) */}
-        <section id="projects" className="py-24 bg-white">
+        <section id="projects" className="py-24 bg-white/70">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">
@@ -522,11 +579,135 @@ export default function HomePage() {
               ))}
             </div>
 
+            {/* Teaser card galeri foto proyek — klik untuk lihat semua foto */}
+            <div className="flex justify-center mt-10">
+              <button
+                type="button"
+                onClick={openProjectGallery}
+                className="group w-full max-w-xl bg-white rounded-lg p-6 border-2 border-dashed border-zinc-300 hover:border-primary/40 hover:shadow-lg transition-all text-left cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="text-[15px] font-semibold text-ink">{t.projectGallery.title}</div>
+                    <div className="text-[12px] text-zinc-500">{t.projectGallery.subtitle}</div>
+                  </div>
+                  <span className="ml-auto text-[12px] font-semibold text-primary group-hover:underline shrink-0">{t.projectGallery.cta} →</span>
+                </div>
+              </button>
+            </div>
+
+            {/* Modal galeri foto proyek */}
+            {showProjectGallery && (
+              <div
+                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm overflow-y-auto"
+                onClick={() => setShowProjectGallery(false)}
+              >
+                <div
+                  className="min-h-full flex items-center justify-center p-4 sm:p-8"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                <div className="w-full max-w-4xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-6 sm:p-8 relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowProjectGallery(false)}
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center cursor-pointer transition-colors"
+                    aria-label={t.projectGallery.cta}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                  <div className="text-center mb-8 pr-10">
+                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">{t.projectGallery.title}</span>
+                    <h3 className="apple-display-md text-ink mt-1">{t.projectGallery.subtitle}</h3>
+                  </div>
+                  {galleryError ? (
+                    <p className="text-center text-zinc-500 py-10">{t.projectGallery.empty}</p>
+                  ) : !galleryData ? (
+                    <p className="text-center text-zinc-400 py-10">Loading…</p>
+                  ) : (
+                    galleryData.groups.map((g) => (
+                      <div key={g.title} className="mb-8 last:mb-0">
+                        <h4 className="text-[13px] font-semibold text-zinc-600 uppercase tracking-widest mb-4">{g.title}</h4>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                          {g.photos.map((p) => (
+                            <button
+                              key={p}
+                              type="button"
+                              onClick={() => {
+                                const idx = flatPhotos.findIndex((f) => f.src === p);
+                                setLightboxIndex(idx);
+                                setLightbox({ src: p, title: g.title });
+                              }}
+                              className="aspect-[4/3] overflow-hidden rounded-lg border border-zinc-200 cursor-zoom-in group/thumb bg-zinc-100"
+                            >
+                              <img src={p} alt={g.title} loading="lazy" className="w-full h-full object-cover group-hover/thumb:scale-105 transition-transform duration-300" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+                </div>
+              </div>
+            )}
+
+            {/* Lightbox foto */}
+            {lightbox && (
+              <div
+                className="fixed inset-0 z-[95] bg-black/90 flex items-center justify-center p-4"
+                onClick={() => setLightbox(null)}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); navLightbox(-1); }}
+                  className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors text-2xl"
+                  aria-label="Previous"
+                >
+                  ‹
+                </button>
+                <img
+                  src={lightbox.src}
+                  alt={lightbox.title}
+                  className="max-w-full max-h-[85vh] rounded-lg shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); navLightbox(1); }}
+                  className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors text-2xl"
+                  aria-label="Next"
+                >
+                  ›
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLightbox(null)}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors"
+                  aria-label="Close"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/85 text-sm bg-black/40 px-4 py-1.5 rounded-full max-w-[90vw] truncate">
+                  {lightbox.title}
+                </div>
+              </div>
+            )}
+
           </div>
         </section>
 
         {/* 8. Testimonials Section */}
-        <section id="testimonials" className="py-24 bg-canvas-parchment border-y border-zinc-200">
+        <section id="testimonials" className="py-24 bg-canvas-parchment/70 border-y border-zinc-200">
           <div className="max-w-[980px] mx-auto px-6">
 
             <div className="text-center mb-16">
@@ -534,36 +715,94 @@ export default function HomePage() {
               <h2 className="apple-display-md text-ink">{t.testimonials.subtitle}</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
-              {t.testimonials.list.map((tm, idx) => (
-                <div key={idx} className="bg-white rounded-lg p-6 border border-zinc-200 shadow-2xs flex flex-col gap-4">
-                  {/* Star rating */}
-                  <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className={`w-4 h-4 ${i < tm.rating ? "text-primary" : "text-zinc-200"}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.37 4.24a1 1 0 00.95.69h4.46c.97 0 1.37 1.24.59 1.81l-3.61 2.62a1 1 0 00-.36 1.12l1.38 4.24c.3.92-.76 1.69-1.54 1.12l-3.61-2.62a1 1 0 00-1.18 0l-3.61 2.62c-.78.57-1.84-.2-1.54-1.12l1.38-4.24a1 1 0 00-.36-1.12L2.32 9.67c-.78-.57-.38-1.81.59-1.81h4.46a1 1 0 00.95-.69L9.05 2.93z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-[14px] text-zinc-600 leading-relaxed italic">&ldquo;{tm.quote}&rdquo;</p>
-                  <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-100">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-sm shrink-0">
-                      {tm.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
-                    </div>
-                    <div>
-                      <div className="text-[13px] font-semibold text-ink">{tm.name}</div>
-                      <div className="text-[11px] text-zinc-500">{tm.role}</div>
-                    </div>
+            {/* Teaser card — klik untuk lihat semua testimoni */}
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllTestimonials(true)}
+                className="group w-full max-w-xl bg-white rounded-lg p-8 border border-zinc-200 shadow-2xs hover:shadow-lg hover:-translate-y-0.5 hover:border-primary/30 transition-all text-left cursor-pointer"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-11 h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="text-[15px] font-semibold text-ink">{t.testimonials.title}</div>
+                    <div className="text-[12px] text-zinc-500">{t.testimonials.list.length} testimoni</div>
                   </div>
                 </div>
-              ))}
+                <p className="text-[15px] text-zinc-600 leading-relaxed italic">&ldquo;{t.testimonials.list[0].quote}&rdquo;</p>
+                <div className="flex items-center gap-3 mt-5 pt-4 border-t border-zinc-100">
+                  <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-xs shrink-0">
+                    {t.testimonials.list[0].name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                  </div>
+                  <div className="text-[13px] font-semibold text-ink">{t.testimonials.list[0].name}</div>
+                  <span className="ml-auto text-[12px] font-semibold text-primary group-hover:underline">{t.testimonials.cta} →</span>
+                </div>
+              </button>
             </div>
+
+            {/* Modal: semua testimoni */}
+            {showAllTestimonials && (
+              <div
+                className="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm overflow-y-auto"
+                onClick={() => setShowAllTestimonials(false)}
+              >
+                <div
+                  className="min-h-full flex items-center justify-center p-4 sm:p-8"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                <div className="w-full max-w-3xl bg-white rounded-2xl border border-zinc-200 shadow-xl p-6 sm:p-8 relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllTestimonials(false)}
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center cursor-pointer transition-colors"
+                    aria-label={t.testimonials.cta}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                  <div className="text-center mb-8 pr-10">
+                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">{t.testimonials.title}</span>
+                    <h3 className="apple-display-md text-ink mt-1">{t.testimonials.subtitle}</h3>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    {t.testimonials.list.map((tm, idx) => (
+                      <div key={idx} className="bg-white rounded-lg p-6 border border-zinc-200 shadow-2xs flex flex-col gap-4">
+                        {/* Star rating */}
+                        <div className="flex gap-1">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <svg key={i} className={`w-4 h-4 ${i < tm.rating ? "text-primary" : "text-zinc-200"}`} fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.37 4.24a1 1 0 00.95.69h4.46c.97 0 1.37 1.24.59 1.81l-3.61 2.62a1 1 0 00-.36 1.12l1.38 4.24c.3.92-.76 1.69-1.54 1.12l-3.61-2.62a1 1 0 00-1.18 0l-3.61 2.62c-.78.57-1.84-.2-1.54-1.12l1.38-4.24a1 1 0 00-.36-1.12L2.32 9.67c-.78-.57-.38-1.81.59-1.81h4.46a1 1 0 00.95-.69L9.05 2.93z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <p className="text-[14px] text-zinc-600 leading-relaxed italic">&ldquo;{tm.quote}&rdquo;</p>
+                        <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-100">
+                          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-sm shrink-0">
+                            {tm.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                          </div>
+                          <div>
+                            <div className="text-[13px] font-semibold text-ink">{tm.name}</div>
+                            <div className="text-[11px] text-zinc-500">{tm.role}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                </div>
+              </div>
+            )}
 
           </div>
         </section>
 
         {/* Contact Us Section (Two Columns: Maps/Info & Interactive form) */}
-        <section id="contact" className="py-24 bg-white">
+        <section id="contact" className="py-24 bg-white/70 backdrop-blur-md">
           <div className="max-w-[980px] mx-auto px-6">
             
             <div className="text-center mb-16">
@@ -731,7 +970,7 @@ export default function HomePage() {
               {t.products.list.map((prod, idx) => (
                 <Link
                   key={idx}
-                  href={`/products/${prod.slug}${lang === "en" ? "?lang=en" : ""}`}
+                  href={`/products/${prod.slug}${lang !== "id" ? `?lang=${lang}` : ""}`}
                   className="text-left hover:text-white transition-colors truncate"
                 >
                   {prod.category}

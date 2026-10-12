@@ -1,3 +1,5 @@
+import { zh } from "./content-zh";
+
 export interface ServiceItem {
   title: string;
   description: string;
@@ -19,6 +21,7 @@ export interface ProductItem {
   description: string;
   image: string;
   items: string[];
+  flagship?: string;
   detail: {
     tagline: string;
     overview: string[];
@@ -120,9 +123,16 @@ export interface ContentData {
     subtitle: string;
     list: ProjectItem[];
   };
+  projectGallery: {
+    title: string;
+    subtitle: string;
+    cta: string;
+    empty: string;
+  };
   testimonials: {
     title: string;
     subtitle: string;
+    cta: string;
     list: TestimonialItem[];
   };
   contact: {
@@ -164,7 +174,7 @@ export interface ContentData {
   };
 }
 
-export const content: { en: ContentData; id: ContentData } = {
+export const content: { en: ContentData; id: ContentData; zh: ContentData } = {
   en: {
     meta: {
       title: "PT. Nyi Bahari Steel | Heavy Equipment, K3 Safety & Manpower",
@@ -269,10 +279,66 @@ export const content: { en: ContentData; id: ContentData } = {
       ctaDetails: "View Details",
       list: [
         {
+          category: "Infrastructure Materials",
+          slug: "infrastructure-materials",
+          description: "Industrial grade pipes, cables, switches, and valves essential for core facility installations.",
+          image: "/hydrant-cover.png",
+          items: ["HDPE & PVC Water Pipes", "Submersible Water Pumps", "SGP & Black Steel Pipes", "Industrial Electrical Cables"],
+          flagship: "Instalasi Hydrant — fire protection piping, pumps & valves",
+          detail: {
+            tagline: "Utility-grade materials with mill certificates",
+            overview: [
+              "We supply industrial-grade pipes, cables, valves, and electrical components for facility utility installations — from factory clean water systems to estate-wide wastewater networks. Materials ship with mill test certificates and brand documentation.",
+              "Our team also executes the installation: pipe laying, jointing, testing, and electrical termination, giving you a single accountable party for both material quality and workmanship."
+            ],
+            specGroups: [
+              {
+                title: "Material Range",
+                specs: [
+                  { label: "Water Pipes", value: "HDPE PN10/PN16 & PVC AW/D, 20–630mm" },
+                  { label: "Steel Pipes", value: "SGP & black steel, schedule 40/80" },
+                  { label: "Pumps", value: "Submersible, centrifugal & booster pumps" },
+                  { label: "Cables", value: "NYY, NYFGBY, NYM industrial power cables" },
+                  { label: "Valves & Fittings", value: "Gate, ball, check valves & HDPE fittings" },
+                  { label: "Electrical", value: "Panels, breakers, conduits & trays" }
+                ]
+              },
+              {
+                title: "Quality & Delivery",
+                specs: [
+                  { label: "Certification", value: "Mill test certificates per batch" },
+                  { label: "Testing", value: "Hydrotest & continuity test support" },
+                  { label: "Lead Time", value: "3–14 days ex-stock or indent" },
+                  { label: "Installation", value: "Optional supply-and-install packages" }
+                ]
+              }
+            ],
+            applications: [
+              "Factory clean water & wastewater systems",
+              "Industrial estate utility networks",
+              "Fire sprinkler & hydrant piping",
+              "Warehouse electrical distribution",
+              "Pump house & utility room builds"
+            ],
+            gallery: [
+              {
+                src: "/real_life_photos.jpeg",
+                alt: "Large-diameter HDPE pipeline pre-assembly at harbour logistics yard",
+                caption: "HDPE pipeline supply & pre-assembly — Tanjung Priok"
+              },
+              {
+                src: "/real_life_photos5.jpeg",
+                alt: "Overhead fire sprinkler piping installation in a petrochemical plant",
+                caption: "Fire sprinkler piping — Cilegon"
+              }
+            ]
+          }
+        },
+        {
           category: "Project Manpower Outsourcing",
           slug: "project-manpower-outsourcing",
           description: "Skilled and semi-skilled labor mobilization — welders, fitters, operators, riggers, and general helpers — deployed flexibly for construction and industrial sites.",
-          image: "/manpower-outsourcing.jpg",
+          image: "/manpower-outsourcing-cover.png",
           items: ["Certified Welders & Fitters", "Heavy Equipment Operators", "Riggers & Scaffolders", "General Helpers & Technicians"],
           detail: {
             tagline: "Certified, field-proven crews ready to mobilize",
@@ -327,7 +393,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Heavy Equipment Fleet",
           slug: "heavy-equipment-fleet",
           description: "High-performance loaders, excavators, and utility machinery available for flexible short or long-term lease.",
-          image: "/heavy-equipment.jpg",
+          image: "/heavy-equipment-cover.png",
           items: ["Excavator 20-Ton Class", "Forklift 3-10 Ton Capacity", "Mobile Crane 25-50 Ton", "Vibro Roller 10-Ton"],
           detail: {
             tagline: "Well-maintained machinery with certified operators",
@@ -382,7 +448,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "K3 Safety Gear",
           slug: "k3-safety-gear",
           description: "Certified safety equipment protecting workers from head to toe, compliant with SNI and international standards.",
-          image: "/safety-equipment.jpg",
+          image: "/safety-equipment-cover.png",
           items: ["SNI Safety Helmets", "Heavy-duty Safety Boots", "Reflective Safety Vests", "Chemical Resistant Gloves"],
           detail: {
             tagline: "Certified protection, complete documentation",
@@ -432,7 +498,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Industrial Technical Tools",
           slug: "industrial-technical-tools",
           description: "Heavy-duty fabrication and assembly machinery designed to withstand rigorous daily field operations.",
-          image: "/technical-tools.jpg",
+          image: "/technical-tools-cover.png",
           items: ["Inverter Welding Machine", "Heavy Duty Angle Grinders", "Cordless Impact Drills", "Mechanic Tool Set (120+ pcs)"],
           detail: {
             tagline: "Workshop-grade tools built for daily field abuse",
@@ -474,61 +540,6 @@ export const content: { en: ContentData; id: ContentData } = {
                 src: "/technical-tools.jpg",
                 alt: "Industrial technical tools and power equipment supplied by NBS",
                 caption: "Heavy-duty power tools & workshop equipment"
-              }
-            ]
-          }
-        },
-        {
-          category: "Infrastructure Materials",
-          slug: "infrastructure-materials",
-          description: "Industrial grade pipes, cables, switches, and valves essential for core facility installations.",
-          image: "/plumbing-electrical.jpg",
-          items: ["HDPE & PVC Water Pipes", "Submersible Water Pumps", "SGP & Black Steel Pipes", "Industrial Electrical Cables"],
-          detail: {
-            tagline: "Utility-grade materials with mill certificates",
-            overview: [
-              "We supply industrial-grade pipes, cables, valves, and electrical components for facility utility installations — from factory clean water systems to estate-wide wastewater networks. Materials ship with mill test certificates and brand documentation.",
-              "Our team also executes the installation: pipe laying, jointing, testing, and electrical termination, giving you a single accountable party for both material quality and workmanship."
-            ],
-            specGroups: [
-              {
-                title: "Material Range",
-                specs: [
-                  { label: "Water Pipes", value: "HDPE PN10/PN16 & PVC AW/D, 20–630mm" },
-                  { label: "Steel Pipes", value: "SGP & black steel, schedule 40/80" },
-                  { label: "Pumps", value: "Submersible, centrifugal & booster pumps" },
-                  { label: "Cables", value: "NYY, NYFGBY, NYM industrial power cables" },
-                  { label: "Valves & Fittings", value: "Gate, ball, check valves & HDPE fittings" },
-                  { label: "Electrical", value: "Panels, breakers, conduits & trays" }
-                ]
-              },
-              {
-                title: "Quality & Delivery",
-                specs: [
-                  { label: "Certification", value: "Mill test certificates per batch" },
-                  { label: "Testing", value: "Hydrotest & continuity test support" },
-                  { label: "Lead Time", value: "3–14 days ex-stock or indent" },
-                  { label: "Installation", value: "Optional supply-and-install packages" }
-                ]
-              }
-            ],
-            applications: [
-              "Factory clean water & wastewater systems",
-              "Industrial estate utility networks",
-              "Fire sprinkler & hydrant piping",
-              "Warehouse electrical distribution",
-              "Pump house & utility room builds"
-            ],
-            gallery: [
-              {
-                src: "/real_life_photos.jpeg",
-                alt: "Large-diameter HDPE pipeline pre-assembly at harbour logistics yard",
-                caption: "HDPE pipeline supply & pre-assembly — Tanjung Priok"
-              },
-              {
-                src: "/real_life_photos5.jpeg",
-                alt: "Overhead fire sprinkler piping installation in a petrochemical plant",
-                caption: "Fire sprinkler piping — Cilegon"
               }
             ]
           }
@@ -610,9 +621,16 @@ export const content: { en: ContentData; id: ContentData } = {
         }
       ]
     },
+    projectGallery: {
+      title: "Project Photo Gallery",
+      subtitle: "Photos of our project activities in the field.",
+      cta: "View gallery",
+      empty: "No photos yet.",
+    },
     testimonials: {
       title: "Testimonials",
       subtitle: "What partners and clients say about working with PT. Nyi Bahari Steel.",
+      cta: "View all testimonials",
       list: [
         {
           name: "Andi Pratama",
@@ -788,10 +806,66 @@ export const content: { en: ContentData; id: ContentData } = {
       ctaDetails: "Lihat Detail",
       list: [
         {
+          category: "Material Utilitas Proyek",
+          slug: "infrastructure-materials",
+          description: "Pipa, kabel, katup, dan komponen listrik berkualitas tinggi untuk menunjang infrastruktur pabrik.",
+          image: "/hydrant-cover.png",
+          items: ["Pipa Air HDPE & PVC", "Pompa Air Submersible", "Pipa Besi SGP & Hitam", "Kabel Listrik Industri NYY/NYFGBY"],
+          flagship: "Instalasi Hydrant — perpipaan proteksi kebakaran, pompa & katup",
+          detail: {
+            tagline: "Material kelas utilitas dengan sertifikat pabrik",
+            overview: [
+              "Kami memasok pipa, kabel, valve, dan komponen listrik kelas industri untuk instalasi utilitas fasilitas — mulai dari sistem air bersih pabrik hingga jaringan air limbah kawasan. Material dikirim beserta mill test certificate dan dokumen merek.",
+              "Tim kami juga mengeksekusi pemasangan: penanaman pipa, penyambungan, pengujian, hingga terminasi listrik, sehingga Anda mendapatkan satu pihak yang bertanggung jawab penuh atas kualitas material maupun hasil kerja."
+            ],
+            specGroups: [
+              {
+                title: "Rangkaian Material",
+                specs: [
+                  { label: "Pipa Air", value: "HDPE PN10/PN16 & PVC AW/D, 20–630mm" },
+                  { label: "Pipa Baja", value: "SGP & besi hitam, schedule 40/80" },
+                  { label: "Pompa", value: "Submersible, sentrifugal & booster" },
+                  { label: "Kabel", value: "Kabel power industri NYY, NYFGBY, NYM" },
+                  { label: "Valve & Fitting", value: "Gate, ball, check valve & fitting HDPE" },
+                  { label: "Kelistrikan", value: "Panel, breaker, conduit & cable tray" }
+                ]
+              },
+              {
+                title: "Kualitas & Pengiriman",
+                specs: [
+                  { label: "Sertifikasi", value: "Mill test certificate per batch" },
+                  { label: "Pengujian", value: "Dukungan hydrotest & uji kontinuitas" },
+                  { label: "Waktu Kirim", value: "3–14 hari, stok ready atau indent" },
+                  { label: "Instalasi", value: "Opsi paket supply-and-install" }
+                ]
+              }
+            ],
+            applications: [
+              "Sistem air bersih & air limbah pabrik",
+              "Jaringan utilitas kawasan industri",
+              "Perpipaan fire sprinkler & hydrant",
+              "Distribusi listrik gudang & pabrik",
+              "Pembangunan ruang pompa & utilitas"
+            ],
+            gallery: [
+              {
+                src: "/real_life_photos.jpeg",
+                alt: "Pra-perakitan pipa HDPE berdiameter besar di lapangan logistik pelabuhan",
+                caption: "Pengadaan & pra-perakitan pipa HDPE — Tanjung Priok"
+              },
+              {
+                src: "/real_life_photos5.jpeg",
+                alt: "Pemasangan pipa fire sprinkler overhead di pabrik petrokimia",
+                caption: "Perpipaan fire sprinkler — Cilegon"
+              }
+            ]
+          }
+        },
+        {
           category: "Outsourcing Tenaga Kerja Proyek",
           slug: "project-manpower-outsourcing",
           description: "Penyediaan tenaga kerja terampil dan semi-terampil — tukang las, fitter, operator, rigger, dan helper — yang dikerahkan secara fleksibel untuk proyek konstruksi dan industri.",
-          image: "/manpower-outsourcing.jpg",
+          image: "/manpower-outsourcing-cover.png",
           items: ["Tukang Las & Fitter Bersertifikat", "Operator Alat Berat", "Rigger & Perancah", "Helper & Teknisi Umum"],
           detail: {
             tagline: "Tim bersertifikat dan berpengalaman, siap dimobilisasi",
@@ -846,7 +920,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Armada Alat Berat",
           slug: "heavy-equipment-fleet",
           description: "Excavator, forklift, dan crane berspesifikasi tinggi yang tersedia untuk sewa jangka pendek maupun jangka panjang.",
-          image: "/heavy-equipment.jpg",
+          image: "/heavy-equipment-cover.png",
           items: ["Excavator Kelas 20 Ton", "Forklift Kapasitas 3-10 Ton", "Mobile Crane 25-50 Ton", "Vibro Roller 10 Ton"],
           detail: {
             tagline: "Mesin terawat dengan operator bersertifikat",
@@ -901,7 +975,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Alat Pelindung Diri (APD)",
           slug: "k3-safety-gear",
           description: "Peralatan keselamatan bersertifikat SNI untuk perlindungan menyeluruh pekerja proyek Anda.",
-          image: "/safety-equipment.jpg",
+          image: "/safety-equipment-cover.png",
           items: ["Helm Safety SNI", "Sepatu Safety Konstruksi", "Rompi Safety Reflektif", "Sarung Tangan Tahan Kimia"],
           detail: {
             tagline: "Perlindungan bersertifikat, dokumentasi lengkap",
@@ -951,7 +1025,7 @@ export const content: { en: ContentData; id: ContentData } = {
           category: "Mesin & Perkakas Teknik",
           slug: "industrial-technical-tools",
           description: "Perkakas kerja industri yang dirancang untuk daya tahan maksimal pada operasional berat harian.",
-          image: "/technical-tools.jpg",
+          image: "/technical-tools-cover.png",
           items: ["Mesin Las Inverter", "Gerinda Tangan Heavy-Duty", "Bor Baterai (Cordless Impact)", "Set Kunci Bengkel (120+ Pcs)"],
           detail: {
             tagline: "Perkakas kelas workshop untuk kerja lapangan berat",
@@ -993,61 +1067,6 @@ export const content: { en: ContentData; id: ContentData } = {
                 src: "/technical-tools.jpg",
                 alt: "Perkakas teknik dan mesin industri yang dipasok oleh NBS",
                 caption: "Power tool heavy-duty & peralatan workshop"
-              }
-            ]
-          }
-        },
-        {
-          category: "Material Utilitas Proyek",
-          slug: "infrastructure-materials",
-          description: "Pipa, kabel, katup, dan komponen listrik berkualitas tinggi untuk menunjang infrastruktur pabrik.",
-          image: "/plumbing-electrical.jpg",
-          items: ["Pipa Air HDPE & PVC", "Pompa Air Submersible", "Pipa Besi SGP & Hitam", "Kabel Listrik Industri NYY/NYFGBY"],
-          detail: {
-            tagline: "Material kelas utilitas dengan sertifikat pabrik",
-            overview: [
-              "Kami memasok pipa, kabel, valve, dan komponen listrik kelas industri untuk instalasi utilitas fasilitas — mulai dari sistem air bersih pabrik hingga jaringan air limbah kawasan. Material dikirim beserta mill test certificate dan dokumen merek.",
-              "Tim kami juga mengeksekusi pemasangan: penanaman pipa, penyambungan, pengujian, hingga terminasi listrik, sehingga Anda mendapatkan satu pihak yang bertanggung jawab penuh atas kualitas material maupun hasil kerja."
-            ],
-            specGroups: [
-              {
-                title: "Rangkaian Material",
-                specs: [
-                  { label: "Pipa Air", value: "HDPE PN10/PN16 & PVC AW/D, 20–630mm" },
-                  { label: "Pipa Baja", value: "SGP & besi hitam, schedule 40/80" },
-                  { label: "Pompa", value: "Submersible, sentrifugal & booster" },
-                  { label: "Kabel", value: "Kabel power industri NYY, NYFGBY, NYM" },
-                  { label: "Valve & Fitting", value: "Gate, ball, check valve & fitting HDPE" },
-                  { label: "Kelistrikan", value: "Panel, breaker, conduit & cable tray" }
-                ]
-              },
-              {
-                title: "Kualitas & Pengiriman",
-                specs: [
-                  { label: "Sertifikasi", value: "Mill test certificate per batch" },
-                  { label: "Pengujian", value: "Dukungan hydrotest & uji kontinuitas" },
-                  { label: "Waktu Kirim", value: "3–14 hari, stok ready atau indent" },
-                  { label: "Instalasi", value: "Opsi paket supply-and-install" }
-                ]
-              }
-            ],
-            applications: [
-              "Sistem air bersih & air limbah pabrik",
-              "Jaringan utilitas kawasan industri",
-              "Perpipaan fire sprinkler & hydrant",
-              "Distribusi listrik gudang & pabrik",
-              "Pembangunan ruang pompa & utilitas"
-            ],
-            gallery: [
-              {
-                src: "/real_life_photos.jpeg",
-                alt: "Pra-perakitan pipa HDPE berdiameter besar di lapangan logistik pelabuhan",
-                caption: "Pengadaan & pra-perakitan pipa HDPE — Tanjung Priok"
-              },
-              {
-                src: "/real_life_photos5.jpeg",
-                alt: "Pemasangan pipa fire sprinkler overhead di pabrik petrokimia",
-                caption: "Perpipaan fire sprinkler — Cilegon"
               }
             ]
           }
@@ -1129,9 +1148,16 @@ export const content: { en: ContentData; id: ContentData } = {
         }
       ]
     },
+    projectGallery: {
+      title: "Galeri Foto Proyek",
+      subtitle: "Foto-foto kegiatan proyek kami di lapangan.",
+      cta: "Lihat galeri",
+      empty: "Belum ada foto — upload ke public/projects/.",
+    },
     testimonials: {
       title: "Testimoni",
       subtitle: "Apa kata mitra dan klien tentang bekerja sama dengan PT. Nyi Bahari Steel.",
+      cta: "Lihat semua testimoni",
       list: [
         {
           name: "Andi Pratama",
@@ -1201,10 +1227,11 @@ export const content: { en: ContentData; id: ContentData } = {
       copyright: "© 2026 PT. Nyi Bahari Steel. Semua hak dilindungi.",
       legal: "Membangun dengan jaminan keselamatan dan kekuatan baja."
     }
-  }
+  },
+  zh,
 };
 
-export type Language = "en" | "id";
+export type Language = "en" | "id" | "zh";
 
 /** Canonical product slugs (from the default/id catalog). */
 export const productSlugs: string[] = content.id.products.list.map((p) => p.slug);
